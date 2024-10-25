@@ -1,0 +1,420 @@
+---
+title: 第6回 プログラミング実習
+theme: "default"
+paginate: true
+marp: true
+math: katex
+---
+
+# プログラミング実習
+
+## 第6回：Javaの設定，条件分岐，繰り返し
+
+清水 哲也（ shimizu@info.shonan-it.ac.jp ）
+
+---
+
+# 今回の授業内容
+
+- [前回の課題の解答例](#前回の課題の解答例)
+- [メソッド](#メソッド)
+- [条件分岐](#条件分岐)
+- [繰り返し](#繰り返し)
+- [課題](#課題)
+
+---
+
+<div Align=center>
+
+# 前回の課題の解答例
+
+</div>
+
+---
+
+# 前回の課題の解答例
+
+SAの学生さんによる解答例です．
+https://shimizu-lab.notion.site/2024-11826a533567807390dcfa0a5e288e15?pvs=4
+
+---
+
+<div Align=center>
+
+# メソッド
+
+</div>
+
+---
+
+# メソッドとは
+
+- 長いプログラムが必要になるときは，命令文を分けて管理した方が見通しが良くなる
+- メソッドは複数の命令文をまとめたもの
+
+### メソッドの宣言
+```java
+void メソッド名() {
+  命令文
+}
+```
+
+- メソッド名は自由につけることができますが， **先頭の文字は小文字** にするという習慣があります
+- 「メソッド」には「クラスメソッド」と「インスタンスメソッド」の2種類があり，今回はクラスメソッドについて学びます
+
+---
+
+# メソッドの例
+メソッドを持つクラスの例
+
+```java
+public class Example {
+  public static void countdonw() {
+    System.out.println("カウントダウンをします");
+    for(int i = 5; i >= 0; i--) {
+      System.out.println(i);
+    }
+  }
+
+  public static void main(String[] args) {
+    countdown();
+  }
+}
+```
+
+例の中の `countdown()` がメソッド名となります．そして，`main` で `countdown();` をメソッドを呼出しています
+
+---
+
+# main メソッド
+
+```java
+public static void main(String[] args)
+```
+
+- Javaでは，プログラムが実行されるときに，この `main` メソッドがJava仮想マシンから呼び出されます
+- `main` メソッドは，プログラムの開始位置となる **特別なメソッド** です
+- `main` メソッドがないとプログラムは動きません
+
+
+---
+
+# メソッド呼出しの処理の流れ
+
+<div Align=center>
+
+![w:1000](./img/06-001.png)
+
+</div>
+
+---
+
+# メソッドの記述場所
+
+C言語と異なりJava言語ではメソッドの宣言位置はmainメソッドより後でも問題ないです
+
+```java
+public class Example{
+  public static void methodA() {
+    System.out.println("methodAが呼び出されました");
+  }
+
+  public static void main(String[] args) {
+    methodA();
+    methodB();
+  }
+
+  public static void methodB(){
+    System.out.println("methodBが呼び出されました");
+  }
+}
+```
+
+---
+
+# メソッド呼出しの階層
+
+```java
+public class Example{
+  public static void methodA() { methodB(); }
+
+  public static void methodB() {
+    System.out.println("MethodAに呼び出されたMethodB");
+  }
+
+  public static void main(String[] args) { methodA(); }
+}
+```
+
+<div Align=center>
+
+![w:800](./img/06-002.png)
+
+</div>
+
+---
+
+# メソッドの引数と戻り値
+
+メソッドは命令文のセット
+
+### 引数
+- メソッドには，命令を実行するときに値を渡すことができます
+- この値を「**引数**」と呼びます
+### 戻り値
+- メソッドは，命令を実行した結果の値を呼び出しもとに戻すことができます
+- この値を「**戻り値**」と呼びます
+
+
+
+---
+
+# 引数のあるメソッド
+
+<div Align=center>
+
+![](./img/06-003.png)
+
+</div>
+
+```java
+void メソッド名(型 変数名) {
+  命令文
+}
+```
+
+---
+
+# 引数のあるメソッドの例
+引数の受渡しには，メソッド名の後ろのカッコ `()` を使用する
+
+```java
+class Example {
+  public static void countdown(int start) {
+    System.out.println("メソッドが受け取った値:" + start);
+    System.out.println("カウントダウンをします");
+    for(int i = start; i >= 0; i--) {
+      System.out.println(i);
+    }
+  }
+  public static void main(String[] args) throws Exception {
+    countdown(10);
+  }
+}
+```
+
+---
+
+# 複数の引数のあるメソッドの例
+
+複数の引数を指定できる
+
+```java
+class Example {
+  public static void countdown(int start, int end) {
+    System.out.println("1つ目の引数で受け取った値：" + start);
+    System.out.println("2つ目の引数で受け取った値：" + end);
+    System.out.println("カウントダウンをします");
+    for (int i = start; i >= end; i--){
+      System.out.println(i);
+    }
+  }
+  public static void main(String[] args) throws Exception {
+    countdown(7 ,3);
+  }
+}
+```
+
+---
+
+# キーボード入力
+
+キーボード入力を使う場合は， `java.util.Scanner`　を使う
+
+```java
+import java.util.Scanner;
+
+public class Example {
+  public static void main(String[] args) {
+    Scanner in = new Scanner(System.in);
+    System.out.println("整数を入力してください．");
+    int i = in.nextInt();
+    System.out.println(i + "が入力されました．");
+  }
+}
+```
+
+小数を受け取る場合は `nextInt` のかわりに `nextDouble` ，文字列を受け取る場合は `next` を使います．
+
+---
+
+# 戻り値のあるメソッド
+
+<div Align=center>
+
+![h:400](./img/06-004.png)
+
+</div>
+
+```java
+戻り値の型 メソッド名(引数列) {
+  命令文
+  return 戻り値;
+}
+```
+
+---
+
+# 戻り値のあるメソッドの例1
+
+- `return` を使って値を戻すようにする
+- 戻り値は1つだけ
+- 戻り値の型をメソッド名の前に書く
+
+```java
+class Example {
+  public static double getAreaofCircle(double radius) {
+    return radius * radius * 3.14;
+  }
+
+  public static void main(String[] args) {
+    double circleArea = getAreaofCircle(2.5);
+    System.out.println("半径2.5の円の面積は" + circleArea);
+  }
+}
+```
+
+---
+
+# 戻り値のあるメソッドの例2
+
+```java
+class Example {
+  public static boolean isPositiveNumber(int i) {
+    if(i > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  public static void main(String[] args) {
+    int i = -10;
+    if(isPositiveNumber(i) == true) {
+      System.out.println("iの値は正です");
+    } else {
+      System.out.println("iの値は負またはゼロです");
+    }
+  }
+}
+```
+
+---
+
+# メソッドのまとめ
+
+引数，戻り値なし
+
+```java
+void メソッド名() {
+  命令文
+}
+```
+
+引数あり，戻り値なし
+
+```java
+void メソッド名(型 変数名) {
+  命令文
+}
+```
+
+引数，戻り値あり
+
+```java
+戻り値の型 メソッド名(型 変数名) {
+  命令文
+  return 戻り値;
+}
+```
+---
+
+# オーバーロード
+
+### オーバーロードとは
+- 同じ名前のメソッドを複数宣言すること
+- ただし，引数は異なる必要がある
+### 同じ名前でも大丈夫なのか？
+- 呼び出し時に指定される引数のタイプによって実行されるメソッドまたはコンストラクタが区別される
+
+---
+
+# メソッドのオーバーロードの例
+
+```java
+class Example {
+  public static void methodA() {
+    System.out.println("引数はありません");
+  }
+  public static void methodA(int i) {
+    System.out.println("int型の値" + i + "を受け取りました．");
+  }
+  public static void methodA(double d) {
+    System.out.println("double型の値" + d + "を受け取りました．");
+  }
+  public static void methodA(String s) {
+    System.out.println("文字列" + s + "を受け取りました．");
+  }
+  public static void main(String[] args) {
+    methodA();
+    methodA(1);
+    methodA(0.1);
+    methodA("Hello");
+  }
+}
+```
+
+---
+
+# オーバーロードができない場合
+
+- 変数の名前が異なるだけではオーバーロードできません
+
+```java
+public static void methodA(int i) { 略 }
+public static void methodA(int j) { 略 }
+```
+
+- 戻り値の方が異なるだけではオーバーロードできません． 
+
+```java
+public static void methodA(int i) { 略 }
+public static int methodA(int i) { 略 }
+```
+
+- メソッドの区別する際の要素は，「**メソッド名**」「**引数の型**」「**引数の数**」の3つになります．
+
+---
+
+# シグネチャ
+
+- 「**メソッド名**」「**引数の型**」「**引数の数**」の3つの要素を **シグネチャ** と呼びます
+- シグネチャが同じメソッドを宣言することはできません
+
+---
+
+<div Align=center>
+
+# 課題
+
+</dvi>
+
+---
+
+# 課題
+
+- 課題はMoodle上にあります
+- 課題に書かれている問題に解答するプログラムを作成してください
+- 作成したプログラムを実行して問題なく動作しているかを確認してください
+- 動作確認が終わったら，プログラムファイル（`filename.java`）をMoodleに提出してください
+
+### 提出期限は **10月21日(月) 20:00** まで
