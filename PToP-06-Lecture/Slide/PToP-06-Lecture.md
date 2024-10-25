@@ -8,7 +8,7 @@ math: katex
 
 # プログラミング実習
 
-## 第6回：Javaの設定，条件分岐，繰り返し
+## 第6回：メソッド，オーバーロード
 
 清水 哲也（ shimizu@info.shonan-it.ac.jp ）
 
