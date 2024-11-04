@@ -219,13 +219,21 @@ StudentCard a = new StudentCard();
 ```
 としたとき，変数`a`には`StudentCard`クラスのインスタンスの参照が代入されます
 
-![h:400](image/08-005.png)
+<div Align=center>
+
+![h:400](./img/07-005.png)
+
+</div>
 
 ---
 
 # 参照の例
 
-![](image/08-006.png)
+<div Align=center>
+
+![](./img/07-006.png)
+
+</div>
 
 ---
 
@@ -248,7 +256,7 @@ b.naem = "佐藤花子";
 
 # 参照の配列
 
-基本型の配列と同じように，参照の配列も作成できます．
+基本型の配列と同じように，参照の配列も作成できます
 
 ```java
 StudentCard[] cards = new StudentCard[3];
@@ -258,7 +266,7 @@ cards[2] = new StudentCart();
 cards[0].id = 1234;
 cards[0].name = "鈴木太郎";
 cards[1].id = 1235;
-cards[1].name = "佐藤花子"';
+cards[1].name = "佐藤花子";
 cards[2].id = 1236;
 cards[2].name =  "山田二郎";
 ```
@@ -267,13 +275,17 @@ cards[2].name =  "山田二郎";
 
 # 参照の配列
 
-![](image/08-007.png)
+<div Align=center>
+
+![](./img/07-007.png)
+
+</div>
 
 ---
 
 # 何も参照しないことを表す`null`
 
-参照型の変数に，何も参照が入って居ない状態は`null`といいます
+参照型の変数に，何も参照が入っていない状態はを`null`といいます
 
 ```java
 StudentCard[] cards = new StudentCard[3];
@@ -282,7 +294,11 @@ cards[1].id = 1235;
 catds[1].name = "佐藤花子";
 ```
 
-![h:300](image/08-008.png)
+<div Align=center>
+
+![h:350](./img/07-008.png)
+
+</div>
 
 ---
 
@@ -345,9 +361,9 @@ public class StudentCard {
 }
 ```
 
-`Example.java`
+`App.java`
 ```java
-public class Example{
+public class App{
   public void main(String args) {
     // StudentCardクラスを使った処理を行う
     （中略）
@@ -359,7 +375,7 @@ public class Example{
 
 # インスタンス変数の初期値
 
-インスタンスヘンスは，インスタンスが生成されるときに自動的に初期化されます
+インスタンス変数は，インスタンスが生成されるときに自動的に初期化されます
 
 ```java
 class DataSet {
@@ -437,7 +453,7 @@ this.メソッド名(引数)
 this(引数)
 ```
 
-※この記述が行えるのはコンストラクタの先頭行だけです
+**※この記述が行えるのはコンストラクタの先頭行だけです**
 
 ---
 
@@ -462,6 +478,8 @@ class StudentCard {
 }
 ```
 
+
+
 ---
 
 # コンストラクタのオーバーロードの例
@@ -480,7 +498,7 @@ StudentCard c = new StudentCard(1235, "佐藤花子");
 
 参照しているものが自分自身（インスタンス）の変数またはメソッドであることが明らかな場合，`this`を省略できます
 
-## 省略できない場合
+### 省略できない場合
 
 ```java
 StudentCard(int id, String name) {
@@ -489,7 +507,15 @@ StudentCard(int id, String name) {
 }
 ```
 
-## 省略できる場合
+このプログラムで`this`を省略すると`id = id`となり，**引数**と**インスタンス変数**の区別がつかなくなるのでこの場合は`this`を省略することができません 
+
+---
+
+# `this`の省略
+
+参照しているものが自分自身（インスタンス）の変数またはメソッドであることが明らかな場合，`this`を省略できます
+
+### 省略できる場合
 
 ```java
 StudentCard(int i, String s) {
@@ -498,23 +524,25 @@ StudentCard(int i, String s) {
 }
 ```
 
+この場合は，`id = i`となり，引数とインスタンス変数の違いが明確にわかります．なので，`this`を省略することがでいます
+
 ---
 
 # クラス変数
 
-- インスタンス変数はインスタンスごとに保存される情報
-- クラス変数はクラスに保持される情報
+- **インスタンス変数**：インスタンスごとに保存される情報
+- **クラス変数**：クラスに保持される情報
 
-例：「犬」クラスについて考えてみる
-インスタンス変数：名前，性別，毛色
-クラス変数：足の本数，尻尾の有無
+### 例：「犬」クラスについて考えてみる
+- **インスタンス変数**：名前，性別，毛色
+- **クラス変数**：足の本数，尻尾の有無
 
 - インスタンス変数は個別のオブジェクトの属性を表します
 - クラス変数はクラスとして持っている属性を表します
 
 ---
 
-# クラスヘンスの例
+# クラス変数の例
 
 - クラス変数を宣言するときには，`static`修飾子をつけます
 - クラス変数は宣言の時に初期化しておきます
@@ -533,7 +561,11 @@ class StudentCard {
 
 # クラス変数とインスタンス変数
 
-![](image/08-009.png)
+<div Align=center>
+
+![](./img/07-009.png)
+
+</div>
 
 ---
 
@@ -541,7 +573,7 @@ class StudentCard {
 
 ```java
 class StudentCard {
-  static int counter = 10;
+  static int counter = 0;
   int id;
   String name;
 

@@ -13,8 +13,6 @@ public class App {
     b.id = 1235;
     b.name = "佐藤花子";
 
-    StudentCard c = a;
-
     System.out.println("aのidは" + a.id);
     System.out.println("aのnameは" + a.name);
     System.out.println("bのidは" + b.id);

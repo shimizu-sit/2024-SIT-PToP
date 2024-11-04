@@ -13,12 +13,14 @@ class StudentCard {
       b.id = 1235;
       b.name = "佐藤花子";
   
-      StudentCard c = a;
+      StudentCard c = b;
   
       System.out.println("aのidは" + a.id);
       System.out.println("aのnameは" + a.name);
       System.out.println("bのidは" + b.id);
       System.out.println("bのnameは" + b.name);
+      System.out.println("cのidは" + c.id);
+      System.out.println("cのnameは" + c.name);
     }
   }
   
