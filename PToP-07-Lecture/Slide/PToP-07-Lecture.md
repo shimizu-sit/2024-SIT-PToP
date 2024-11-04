@@ -8,7 +8,7 @@ math: katex
 
 # プログラミング実習
 
-## 第7回：メソッド，オーバーロード
+## 第7回：クラスについて
 
 清水 哲也（ shimizu@info.shonan-it.ac.jp ）
 
@@ -17,8 +17,7 @@ math: katex
 # 今回の授業内容
 
 - [前回の課題の解答例](#前回の課題の解答例)
-- [メソッド](#メソッド)
-- [メソッドのオーバーロード](#メソッドのオーバーロード)
+- [クラスの基本](#クラスの基本)
 - [課題](#課題)
 
 ---
@@ -38,446 +37,590 @@ https://shimizu-lab.notion.site/2024-11826a533567807390dcfa0a5e288e15?pvs=4
 
 ---
 
-<div Align=center>
 
-# メソッド
-
-</div>
+# クラスの基本
 
 ---
 
-# メソッドとは
+# オブジェクト指向とは
 
-- 長いプログラムが必要になるときは，命令文を分けて管理した方が見通しが良くなる
-- メソッドは複数の命令文をまとめたもの
+- プログラム部品を組み合わせることでプログラム全体を作成する
+- プログラムを自動車に例えると・・・
+  - 自動車は様々な部品から構成される
+    - 車体・エンジン・タイヤ，ヘッドライト etc
+  - 最終製品は部品の組み合わせ
+  - それぞれの部品の内部構造を知らなくても，組み合わせ方（使い方）がわかればよい
+  - 部品単位でアップデートできる
 
-### メソッドの宣言
+---
+
+# オブジェクト指向とクラス
+
+- 「プログラムの部品＝オブジェクト」と考える
+- オブジェクトがどのようなものか喜寿tしたものが「クラス(class)」
+- Javaによるプログラミング＝classを定義すること
+- 複雑なプログラムは多くのプログラム部品から構成される
+
+![w:600](image/08-001.png)
+
+---
+
+# クラスとインスタンス
+
+- **クラス**
+  - オブジェクトに共通する属性（情報・機能）を抽象化したもの
+- **インスタンス**
+  - 具体的な個々のオブジェクト
+
+| アプリの例 | クラス | インスタンス |
+|--|--|--|
+| 学生情報管理ツール | 管理項目を定めたもの | 学生Aの情報，学生Bの情報，etc |
+| RPGゲーム | 敵の情報や動作を定めたもの | モンスターA，モンスターB，etc |
+| サッカーゲーム | 選手が持つ情報を定めるもの | 選手1，選手2，etc |
+
+---
+
+# 簡単なクラスの宣言とインスタンスの生成
+
+例として学籍番号(`id`)と氏名(`name`)を持つ学生書を扱うためのクラスは，次のように宣言できます
+
 ```java
-void メソッド名() {
-  命令文
+class StudentCard {
+  int id;
+  String name;
 }
 ```
 
-- メソッド名は自由につけることができますが， **先頭の文字は小文字** にするという習慣があります
-- 「メソッド」には「クラスメソッド」と「インスタンスメソッド」の2種類があり，今回はクラスメソッドについて学びます
+- クラスの名前は自由に決められる（今回は`StudentCard`とします）
+- `id`と`name`という名前のint型とString型の変数をクラスの中に定義しました（これをフィールドと呼びます）
+- `id`と`name`という2つの値をセットにして扱えます
+---
+
+# インスタンスの生成
+
+インスタンスを先生するには`new`を使用します．
+
+```java
+new StudentCard();
+```
+
+![w:700](image/08-002.png)
 
 ---
 
-# メソッドの例
-メソッドを持つクラスの例
+# インスタンスの生成
+
+生成したインスタンスを変数`a`に代入できます
 
 ```java
-public class Example {
-  public static void countdonw() {
-    System.out.println("カウントダウンをします");
-    for(int i = 5; i >= 0; i--) {
-      System.out.println(i);
-    }
-  }
+StudentCard a = new StudentCard();
+```
 
-  public static void main(String[] args) {
-    countdown();
-  }
+インスタンスが持つ変数に値を代入できます．
+
+```java
+StudentCard a = new StudentCard();
+
+a.id = 1234;
+a.name = "鈴木太郎";
+```
+
+---
+
+# インスタンス変数へのアクセス
+
+- インスタンスが持つ変数（クラスのフィールドに定義された変数）のことを「インスタンス変数」と呼びます
+- `StudentCard`クラスでは変数`id`と`name`がインスタンス変数
+- インスタンス変数にアクセスするには「インスタンスを代入した変数名＋ドット＋インスタンス変数名」とします
+
+インスタンス変数へのアクセス例
+```java
+StudentCard a = new StudentCard();
+a.id = 10;
+System.out.println("aのidは" + a.id);
+```
+（ドットを「の」に置き換えて「aのx」と読むとわかりやすいです）
+
+---
+
+# StudentCardクラスの使用例
+
+![](image/08-003.png)
+
+---
+
+# StudentCardクラスの使用例
+
+```java
+class StudentCard {
+  int id; // 学籍番号
+  String name; // 氏名 
 }
-```
-
-例の中の `countdown()` がメソッド名となります．そして，`main` で `countdown();` をメソッドを呼出しています
-
----
-
-# main メソッド
-
-```java
-public static void main(String[] args)
-```
-
-- Javaでは，プログラムが実行されるときに，この `main` メソッドがJava仮想マシンから呼び出されます
-- `main` メソッドは，プログラムの開始位置となる **特別なメソッド** です
-- `main` メソッドがないとプログラムは動きません
-
-
----
-
-# メソッド呼出しの処理の流れ
-
-<div Align=center>
-
-![w:1000](./img/06-001.png)
-
-</div>
-
----
-
-# メソッドの記述場所
-
-C言語と異なりJava言語ではメソッドの宣言位置はmainメソッドより後でも問題ないです
-
-```java
-public class Example{
-  public static void methodA() {
-    System.out.println("methodAが呼び出されました");
-  }
-
-  public static void main(String[] args) {
-    methodA();
-    methodB();
-  }
-
-  public static void methodB(){
-    System.out.println("methodBが呼び出されました");
-  }
-}
-```
-
----
-
-# メソッド呼出しの階層
-
-```java
-public class Example{
-  public static void methodA() { methodB(); }
-
-  public static void methodB() {
-    System.out.println("MethodAに呼び出されたMethodB");
-  }
-
-  public static void main(String[] args) { methodA(); }
-}
-```
-
-<div Align=center>
-
-![w:800](./img/06-002.png)
-
-</div>
-
----
-
-# メソッドの引数と戻り値
-
-メソッドは命令文のセット
-
-### 引数
-- メソッドには，命令を実行するときに値を渡すことができます
-- この値を「**引数**」と呼びます
-### 戻り値
-- メソッドは，命令を実行した結果の値を呼び出しもとに戻すことができます
-- この値を「**戻り値**」と呼びます
-
-
-
----
-
-# 引数のあるメソッド
-
-<div Align=center>
-
-![](./img/06-003.png)
-
-</div>
-
-```java
-void メソッド名(型 変数名) {
-  命令文
-}
-```
-
----
-
-# 引数のあるメソッドの例
-引数の受渡しには，メソッド名の後ろのカッコ `()` を使用する
-
-```java
-class Example {
-  public static void countdown(int start) {
-    System.out.println("メソッドが受け取った値:" + start);
-    System.out.println("カウントダウンをします");
-    for(int i = start; i >= 0; i--) {
-      System.out.println(i);
-    }
-  }
-  public static void main(String[] args) throws Exception {
-    countdown(10);
-  }
-}
-```
-
----
-
-# 複数の引数のあるメソッドの例
-
-複数の引数を指定できる
-
-```java
-class Example {
-  public static void countdown(int start, int end) {
-    System.out.println("1つ目の引数で受け取った値：" + start);
-    System.out.println("2つ目の引数で受け取った値：" + end);
-    System.out.println("カウントダウンをします");
-    for (int i = start; i >= end; i--){
-      System.out.println(i);
-    }
-  }
-  public static void main(String[] args) throws Exception {
-    countdown(7 ,3);
-  }
-}
-```
-
----
-
-# キーボード入力
-
-キーボード入力を使う場合は， `java.util.Scanner`　を使う
-
-```java
-import java.util.Scanner;
 
 public class Example {
   public static void main(String[] args) {
-    Scanner in = new Scanner(System.in);
-    System.out.println("整数を入力してください．");
-    int i = in.nextInt();
-    System.out.println(i + "が入力されました．");
+    StudentCard a = new StudentCard();
+    a.id = 1234;
+    a.name = "鈴木太郎";
+    StudentCard b = new StudentCard();
+    b.id = 1235;
+    b.name = "佐藤花子";
+
+    System.out.println("aのidは" + a.id);
+    System.out.println("aのnameは" + a.name);
+    System.out.println("bのidは" + b.id);
+    System.out.println("bのnameは" + b.name);
   }
 }
 ```
 
-小数を受け取る場合は `nextInt` のかわりに `nextDouble` ，文字列を受け取る場合は `next` を使います．
+---
+
+# 参照型
+
+- Javaで使用できる変数の型
+  - 基本型（`int`, `double`, `boolean`など）
+  - 参照型（インスタンスへの参照）
+- 変数にインスタンスそのものは代入できない
+
+![](image/08-004.png)
 
 ---
 
-# 戻り値のあるメソッド
-
-<div Align=center>
-
-![h:400](./img/06-004.png)
-
-</div>
+# 参照の代入
 
 ```java
-public static 戻り値の型 メソッド名(引数列) {
+StudentCard a = new StudentCard();
+```
+としたとき，変数`a`には`StudentCard`クラスのインスタンスの参照が代入されます
+
+![h:400](image/08-005.png)
+
+---
+
+# 参照の例
+
+![](image/08-006.png)
+
+---
+
+# 参照の例
+
+
+```java
+StudentCard a = new StudentCard();
+StudentCard b = new StudentCard();
+StudentCard c = b;
+a.id = 1234;
+a.name = "鈴木太郎";
+b.id = 1235;
+b.naem = "佐藤花子";
+```
+
+この例では，`StudentCard c = b;`としているので`b.id = 1235;`と`b.name = "佐藤花子"`で変数`b`と`c`に同じ値が入ることになります．逆に`c.id`と`c.name`に適当な値を入れると変数`b`も`c`と同じになります．
+
+---
+
+# 参照の配列
+
+基本型の配列と同じように，参照の配列も作成できます．
+
+```java
+StudentCard[] cards = new StudentCard[3];
+cards[0] = new StudentCart();
+cards[1] = new StudentCart();
+cards[2] = new StudentCart();
+cards[0].id = 1234;
+cards[0].name = "鈴木太郎";
+cards[1].id = 1235;
+cards[1].name = "佐藤花子"';
+cards[2].id = 1236;
+cards[2].name =  "山田二郎";
+```
+
+---
+
+# 参照の配列
+
+![](image/08-007.png)
+
+---
+
+# 何も参照しないことを表す`null`
+
+参照型の変数に，何も参照が入って居ない状態は`null`といいます
+
+```java
+StudentCard[] cards = new StudentCard[3];
+cards[1] = new StudentCard();
+cards[1].id = 1235;
+catds[1].name = "佐藤花子";
+```
+
+![h:300](image/08-008.png)
+
+---
+
+# `null`は参照型の値
+
+`null`は，参照型の変数に代入できます
+
+```java
+StudentCard a;
+a = null;
+```
+
+`null`は参照型の変数の値と比較できます
+
+```java
+StudentCard a = new StudentCard();
+if (a == null) {
+  System.out.println("aはnull");
+} else {
+  System.out.println("aはnullでない")'
+}
+```
+
+---
+
+# 参照とメソッド
+
+メソッドには引数としてインスタンスの参照を受け渡しができます
+
+```java
+static void reset(StudentCart card) {
+  card.id = 0;
+  card.name = "未定";
+}
+```
+
+メソッドの戻り値にすることもできます
+
+```java
+static StudentCard compare(StudentCard card0, StudentCard cart1) {
+  if (card0.id < card1.id) {
+    return card0;
+  } esle {
+    return card1;
+  }
+}
+```
+
+---
+
+# クラスの定義とファイル
+
+複数のクラス宣言を1つのファイルに記述せず，複数のファイルに分けて記述できます
+
+`StudentCard.java`
+
+```java
+public class StudentCard {
+  （中略）
+}
+```
+
+`Example.java`
+```java
+public class Example{
+  public void main(String args) {
+    // StudentCardクラスを使った処理を行う
+    （中略）
+  }
+}
+```
+
+---
+
+# インスタンス変数の初期値
+
+インスタンスヘンスは，インスタンスが生成されるときに自動的に初期化されます
+
+```java
+class DataSet {
+  int i;          // 0で初期化されます
+  double d;       // 0.0で初期化されます
+  boolean b;      // falseで初期化されます
+  String s;       // nullで初期化されます
+  DataSet data;   // nullで初期化されます
+}
+```
+
+---
+
+# コンストラクタ
+
+コンストラクタとは，インスタンスが生成されるときに自動的に実行される特別なメソッド
+
+## コンストラクタの構文
+```java
+クラス名(引数列) {
   命令文
-  return 戻り値;
 }
 ```
 
----
-
-# 戻り値のあるメソッドの例1
-
-- `return` を使って値を戻すようにする
-- 戻り値は1つだけ
-- 戻り値の型をメソッド名の前に書く
-
-```java
-public static double getAreaOfCircle(double radius) {
-  return radius * radius * 3.14;
-}
-```
-
-このメソッド名は`getAreaOfCircle`とし，引数も戻り値も`double`型です．
-引数`radius`を受け取り円の面積（半径ｘ半径ｘ3.14）を計算した結果を返します．
+- クラス名と同じ名前のメソッド
+- 引数を渡せます（初期化に使用できます）
+- 戻り値を定義できないです
 
 ---
 
-# 戻り値のあるメソッドの例1
+# コンストラクタの例
 
-`getAreaOfCircle`メソッドの戻り値の型が`double`型なので`main`メソッドで受け取る変数も`double`型で宣言します．
+コンストラクタをもつ`StudentCard`クラス
 
 ```java
-class Example {
-  public static double getAreaofCircle(double radius) {
-    return radius * radius * 3.14;
-  }
+class StudentCard {
+  int id;
+  String name;
 
-  public static void main(String[] args) {
-    double circleArea = getAreaofCircle(2.5);
-    System.out.println("半径2.5の円の面積は" + circleArea);
+  // コンストラクタ
+  StudentCard(int id, String name) {
+    this.id = id;
+    this.name = name;
   }
 }
 ```
 
----
-
-# 戻り値のあるメソッドの例2
-
-`boolean`型の値を戻り値にするメソッドの例です．
-`isPositiveNumber`メソッドは，引数で受け取った値が「正の値」であれば`true`をそうでなれば`false`を返します
+インスタンスの生成
 
 ```java
-public static boolean isPositiveNumber(int i) {
-  if(i > 0) {
-    return true;
-  } else {
-    return false;
-  }
-}
-```
-
-この例でもわかるように，`return`を複数使うこともできます．ですが，`if`文などを利用して条件分岐をする必要があります．
-
----
-
-# 戻り値のあるメソッドの例2
-
-```java
-class Example {
-  public static boolean isPositiveNumber(int i) {
-    if(i > 0) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-  public static void main(String[] args) {
-    int i = -10;
-    if(isPositiveNumber(i) == true) {
-      System.out.println("iの値は正です");
-    } else {
-      System.out.println("iの値は負またはゼロです");
-    }
-  }
-}
+StudentCard a = new StudentCard(1234, "鈴木太郎");
+System.out.println(a.id);
+System.out.println(a.name);
 ```
 
 ---
 
-# メソッドのまとめ
+# 自分自身を表す`this`
 
-引数，戻り値なし
-
-```java
-void メソッド名() {
-  命令文
-}
-```
-
-引数あり，戻り値なし
+インスタンス変数を参照する
 
 ```java
-void メソッド名(型 変数名) {
-  命令文
-}
+this.変数名
 ```
 
-引数，戻り値あり
+自分のメソッドを実行する
 
 ```java
-戻り値の型 メソッド名(型 変数名) {
-  命令文
-  return 戻り値;
-}
+this.メソッド名(引数)
 ```
----
 
-<div Align=center>
+自分のコンストラクタを実行する
 
-# メソッドのオーバーロード
+```java
+this(引数)
+```
 
-</div>
+※この記述が行えるのはコンストラクタの先頭行だけです
 
 ---
 
-# メソッドのオーバーロードとは？
-
-### 定義
-同じクラス内で，同じ名前のメソッドを異なる引数リストで複数定義することです
-
-### 目的
-同じ機能を提供しつつ，**引数の型**や**数**の違いに対応するためです
-
-### 特徴
-- メソッド名が同じ
-- 引数の型、数、順序が異なる
-- 戻り値の型だけを変えてもオーバーロードにはならない
-
-----
-
-# メソッドのオーバーロードとは？
-
-### オーバーロードの条件
-
-1. **引数の数**が異なる
-2. **引数の型**が異なる
-3. **引数の並び順**が異なる（異なる型の引数の場合）
-
-### メソッドのオーバーロード例
-```java
-public int add(int a, int b)
-public double add(double a, double b)
-public int add(int a, int b, int c)
-```
-
----
-
-# オーバーロードのメリットとデメリット
-
-### メリット
-
-- **コードの可読性向上** : 同じ機能に対して統一されたメソッド名を使用できる
-- **柔軟性** : 引数の違いに応じてメソッドを使い分けることが可能
-- **開発効率の向上** : メソッド名を覚える負担が減る
-
-### デメリット
-
-- **可読性の低下** : 過度なオーバーロードはコードの理解を難しくする
-- **デバッグの難易度上昇** : どのメソッドが呼び出されているか判別しづらい
-- **保守性の低下** : メソッドが増えると管理が複雑になる
-
----
-
-# メソッドのオーバーロードの例
+# コンストラクタのオーバーロードの例
 
 ```java
-class Example {
-  public static void methodA() {
-    System.out.println("引数はありません");
+class StudentCard {
+  int id;
+  String name;
+  StudentCard() {
+    this.id = 0;
+    this.name = "未定";
   }
-  public static void methodA(int i) {
-    System.out.println("int型の値" + i + "を受け取りました．");
+  StudentCard(String name) {
+    this.id = 0;
+    this.name = name;
   }
-  public static void methodA(double d) {
-    System.out.println("double型の値" + d + "を受け取りました．");
-  }
-  public static void methodA(String s) {
-    System.out.println("文字列" + s + "を受け取りました．");
-  }
-  public static void main(String[] args) {
-    methodA();
-    methodA(1);
-    methodA(0.1);
-    methodA("Hello");
+  StrudentCard(int id, String name) {
+    this.id = id;
+    this.name = name;
   }
 }
 ```
 
 ---
 
-# オーバーロードができない場合
+# コンストラクタのオーバーロードの例
 
-- 変数の名前が異なるだけではオーバーロードできません
-
-```java
-public static void methodA(int i) { 略 }
-public static void methodA(int j) { 略 }
-```
-
-- 戻り値の方が異なるだけではオーバーロードできません． 
+インスタンスの生成
 
 ```java
-public static void methodA(int i) { 略 }
-public static int methodA(int i) { 略 }
+StudentCard a = new StudentCard();
+StudentCard b = new StudentCart("鈴木太郎");
+StudentCard c = new StudentCard(1235, "佐藤花子");
 ```
-
-- メソッドの区別する際の要素は，「**メソッド名**」「**引数の型**」「**引数の数**」の3つになります．
 
 ---
 
-# シグネチャ
+# `this`の省略
 
-- 「**メソッド名**」「**引数の型**」「**引数の数**」の3つの要素を **シグネチャ** と呼びます
-- シグネチャが同じメソッドを宣言することはできません
+参照しているものが自分自身（インスタンス）の変数またはメソッドであることが明らかな場合，`this`を省略できます
+
+## 省略できない場合
+
+```java
+StudentCard(int id, String name) {
+  this.id = id;
+  this.name = name;
+}
+```
+
+## 省略できる場合
+
+```java
+StudentCard(int i, String s) {
+  id = i;
+  name = s;
+}
+```
+
+---
+
+# クラス変数
+
+- インスタンス変数はインスタンスごとに保存される情報
+- クラス変数はクラスに保持される情報
+
+例：「犬」クラスについて考えてみる
+インスタンス変数：名前，性別，毛色
+クラス変数：足の本数，尻尾の有無
+
+- インスタンス変数は個別のオブジェクトの属性を表します
+- クラス変数はクラスとして持っている属性を表します
+
+---
+
+# クラスヘンスの例
+
+- クラス変数を宣言するときには，`static`修飾子をつけます
+- クラス変数は宣言の時に初期化しておきます
+
+`StudentCard`クラスに，`counter`という`int`型のクラス変数を追加した例
+
+```java
+class StudentCard {
+  static int counter;
+  int id;
+  String name;
+} 
+```
+
+---
+
+# クラス変数とインスタンス変数
+
+![](image/08-009.png)
+
+---
+
+# クラス変数の利用例
+
+```java
+class StudentCard {
+  static int counter = 10;
+  int id;
+  String name;
+
+  StudentCard(int id, String name) {
+    this.id = id;
+    this.name = name;
+    StudentCard.counter++;
+  }
+}
+```
+
+---
+
+# クラス変数の利用例
+
+```java
+public static void main(String[] args) {
+  System.out.println("StudentCard.counter=" + StudentCard.counter);
+
+  StudentCard a = new StudentCard(1234, "鈴木太郎");
+  System.out.println("StudentCard.counter=" + StudentCard.counter);
+
+  StudentCard a = new StudentCard(1235, "佐藤花子　");
+  System.out.println("StudentCard.counter=" + StudentCard.counter);
+}
+```
+
+※クラス変数には「クラス名.クラス変数名」でアクセスできます
+※クラス変数は，インスタンスを1つも生成しなくても参照できます
+
+---
+
+# クラス名の省略
+
+インスタンス変数を参照することが明らかな場合は`this`を省略できました
+
+同様に，クラス変数を参照することが明らかな場合も，クラス名を省略できます
+
+```java
+class StudentCard {
+  static int counter = 0;
+  int id;
+  String name;
+
+  point(int id, String name) {
+    this.id = id;
+    this.name = name;
+    counter++;
+  }
+}
+```
+
+---
+
+# クラスメソッド
+
+- クラスに対して呼び出される「クラスメソッド」というメソッドがあります
+- インスタンスを生成しなくても「クラス名.メソッド名」で呼び出すことができます
+- メソッドの宣言に`static`修飾子をつけます
+
+---
+
+# クラスメソッドの例
+
+```java
+class SimpleCale {
+  // 引数で渡された底辺と高さの値から三角形の面積を返します
+  static double getTriangleArea(double base, double height) {
+    return base * height / 2.0;
+  }
+}
+```
+
+クラスメソッドの使用例
+
+```java
+System.out.println("底辺が10，高さが5の三角形の面積は" + SimpleCalc.getTriangleArea(10,5) + "です");
+```
+
+インスタンスを生成しなくても使用できます
+単純な計算処理のように，インスタンス変数を使用しない処理を行うのに便利です
+
+---
+
+# クラスの構造の復習
+
+```java
+class クラス名 {
+  インスタンス変数の宣言;
+  インスタンス変数の宣言;
+  ・・・
+  クラス変数の宣言;
+  クラス変数の宣言;
+  ・・・
+  コンストラクタの宣言;
+  コンストラクタの宣言;
+  ・・・
+  インスタンスメソッドの宣言;
+  インスタンスメソッドの宣言;
+  ・・・
+  クラスメソッドの宣言;
+  クラスメソッドの宣言;
+}
+```
 
 ---
 
