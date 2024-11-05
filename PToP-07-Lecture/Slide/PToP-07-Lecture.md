@@ -17,7 +17,10 @@ math: katex
 # 今回の授業内容
 
 - [前回の課題の解答例](#前回の課題の解答例)
-- [クラスの基本](#クラスの基本)
+- [クラスとインスタンス](#クラスとインスタンス)
+- [参照](#参照)
+- [コンストラクタ](#コンストラクタ)
+- [クラス変数とクラスメソッド](#クラス変数とクラスメソッド)
 - [課題](#課題)
 
 ---
@@ -39,7 +42,7 @@ https://shimizu-lab.notion.site/2024-11826a533567807390dcfa0a5e288e15?pvs=4
 
 <div Align=center>
 
-# クラスの基本
+# クラスとインスタンス
 
 </div>
 
@@ -194,6 +197,14 @@ public class App {
   }
 }
 ```
+
+---
+
+<div Align=center>
+
+# 参照
+
+</dvi>
 
 ---
 
@@ -389,6 +400,14 @@ class DataSet {
 
 ---
 
+<div Align=center>
+
+# コンストラクタ
+
+</div>
+
+---
+
 # コンストラクタ
 
 コンストラクタとは，インスタンスが生成されるときに自動的に実行される特別なメソッド
@@ -478,8 +497,6 @@ class StudentCard {
 }
 ```
 
-
-
 ---
 
 # コンストラクタのオーバーロードの例
@@ -528,6 +545,14 @@ StudentCard(int i, String s) {
 
 ---
 
+<div Align=center>
+
+# クラス変数とクラスメソッド
+
+</div>
+
+---
+
 # クラス変数
 
 - **インスタンス変数**：インスタンスごとに保存される情報
@@ -570,14 +595,16 @@ class StudentCard {
 ---
 
 # クラス変数の利用例
+コンストラクタが呼び出されるたびに`counter`をカウントアップする
 
 ```java
-class StudentCard {
+public class StudentCard {
   static int counter = 0;
   int id;
   String name;
 
   StudentCard(int id, String name) {
+    System.out.println("コンストラクタが呼び出されました");
     this.id = id;
     this.name = name;
     StudentCard.counter++;
@@ -601,26 +628,28 @@ public static void main(String[] args) {
 }
 ```
 
-※クラス変数には「クラス名.クラス変数名」でアクセスできます
-※クラス変数は，インスタンスを1つも生成しなくても参照できます
+*️⃣クラス変数には「`クラス名.クラス変数名`」でアクセスできます
+*️⃣クラス変数は，インスタンスを1つも生成しなくても参照できます
 
 ---
 
 # クラス名の省略
 
-インスタンス変数を参照することが明らかな場合は`this`を省略できました
+**インスタンス変数**を参照することが明らかな場合は`this`を省略できました
 
-同様に，クラス変数を参照することが明らかな場合も，クラス名を省略できます
+同様に，**クラス変数**を参照することが明らかな場合も，クラス名を省略できます
 
 ```java
-class StudentCard {
+public class StudentCard {
   static int counter = 0;
   int id;
   String name;
 
-  point(int id, String name) {
+  StudentCard(int id, String name) {
+    System.out.println("コンストラクタが呼び出されました");
     this.id = id;
     this.name = name;
+    //StudentCard.counter++;
     counter++;
   }
 }
@@ -630,8 +659,8 @@ class StudentCard {
 
 # クラスメソッド
 
-- クラスに対して呼び出される「クラスメソッド」というメソッドがあります
-- インスタンスを生成しなくても「クラス名.メソッド名」で呼び出すことができます
+- クラスに対して呼び出される「**クラスメソッド**」というメソッドがあります
+- インスタンスを生成しなくても「`クラス名.メソッド名`」で呼び出すことができます
 - メソッドの宣言に`static`修飾子をつけます
 
 ---
@@ -696,4 +725,4 @@ class クラス名 {
 - 作成したプログラムを実行して問題なく動作しているかを確認してください
 - 動作確認が終わったら，プログラムファイル（`filename.java`）をMoodleに提出してください
 
-### 提出期限は **11月4日(月) 20:00** まで
+### 提出期限は **11月11日(月) 20:00** まで
