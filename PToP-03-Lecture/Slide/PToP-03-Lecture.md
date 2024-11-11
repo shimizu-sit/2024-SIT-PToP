@@ -1,12 +1,16 @@
 ---
+title: 第3回 プログラミング実習
+theme: "default"
+paginate: true
 marp: true
+math: katex
 ---
 
 <!-- paginate: true -->
 
 # プログラミング実習
 
-## 第2回：配列と関数
+## 第3回：配列と関数
 
 清水 哲也（ shimizu@info.shonan-it.ac.jp ）
 
