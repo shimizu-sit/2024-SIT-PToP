@@ -1,5 +1,9 @@
 ---
+title: 第2回 プログラミング実習
+theme: "default"
+paginate: true
 marp: true
+math: katex
 ---
 
 <!-- paginate: true -->
