@@ -22,7 +22,10 @@ public class App {
     long B = scanner.nextLong();
     scanner.close();
 
+    long startTime = System.currentTimeMillis();
     long Answer = (GCD(A, B));
     System.out.println("整数" + A + "と" + B + "の最大公約数は" + Answer + "です");
+    long endTime = System.currentTimeMillis();
+    System.out.println("処理時間: " + (endTime - startTime) + " ms");
   }
 }
