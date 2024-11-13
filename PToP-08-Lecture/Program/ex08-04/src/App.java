@@ -16,9 +16,9 @@ public class App {
 
   public static void main(String[] args) throws Exception {
     Scanner scanner = new Scanner(System.in);
-    System.out.println("正整数Aを入力してください．");
+    System.out.println("正整数Aを入力してください．"); // 100000000000
     long A = scanner.nextLong();
-    System.out.println("正整数Bを入力してください．");
+    System.out.println("正整数Bを入力してください．"); // 123450000000
     long B = scanner.nextLong();
     scanner.close();
 
