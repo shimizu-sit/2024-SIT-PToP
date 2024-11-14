@@ -77,7 +77,7 @@ https://shimizu-lab.notion.site/2024-11826a533567807390dcfa0a5e288e15?pvs=4
 
 <div Align=center>
 
-![w:900](./img/08_001.png)
+![w:900](./img/08-001.png)
 
 </div>
 
