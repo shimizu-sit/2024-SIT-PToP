@@ -362,7 +362,7 @@ $$
 $n$  個のモノを並び替える方法は 
 
 $$
-n! = n \times (n - 1) \times (n - 2) \times \cdot \times 3 \times 2 \times 1
+n! = n \times (n - 1) \times (n - 2) \times \cdots \times 3 \times 2 \times 1
 $$
 
 通りあります
